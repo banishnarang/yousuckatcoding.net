@@ -7,7 +7,8 @@ const Header = () => {
 			<div className="flex-1">
 				<Link href="/">
 					<a className="btn btn-ghost normal-case text-xl">
-						You Suck At Coding
+						You <span className="text-secondary">Suck</span> At{" "}
+						<span className="text-accent">Coding</span>
 					</a>
 				</Link>
 			</div>
