@@ -3,13 +3,13 @@ import { LoginIcon, UserAddIcon } from "@heroicons/react/outline";
 
 const Header = () => {
 	return (
-		<div className="navbar bg-base-100">
+		<div className="navbar bg-gradient-to-r from-secondary hover:from-primary to-primary hover:to-secondary">
 			<div className="flex-1">
 				<Link href="/">
-					<a className="btn btn-ghost normal-case text-xl">
-						You <span className="text-secondary">Suck</span> At{" "}
+					<pre className="btn btn-ghost normal-case text-xl">
+						You<span className="text-accent">Suck</span>At
 						<span className="text-accent">Coding</span>
-					</a>
+					</pre>
 				</Link>
 			</div>
 			<div className="flex-none">
