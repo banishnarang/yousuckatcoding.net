@@ -5,7 +5,7 @@ const Login = () => {
 		<div>
 			{/* Jumbotron */}
 			<div className="hero h-52">
-				<div className="hero-overlay bg-opacity-60 bg-gradient-to-r from-primary"></div>
+				<div className="hero-overlay bg-opacity-60 bg-gradient-to-r from-accent hover:from-primary to-primary hover:to-accent"></div>
 				<div className="hero-content text-center text-neutral-content">
 					<div className="max-w-md">
 						<h1 className="text-5xl font-bold">Login</h1>
