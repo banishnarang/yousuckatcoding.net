@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 const Register = () => {
 	const [name, setName] = useState("");
@@ -7,14 +8,14 @@ const Register = () => {
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [error, setError] = useState("");
 
-	const handleSubmit = () => {
-		//
+	const handleSubmit = async (e) => {
+		e.preventDefault();
 	};
 
 	return (
 		<div className="flex flex-col bg-gradient-to-r from-secondary to-primary">
 			{/* Jumbotron */}
-            <div className="hero h-44">
+			<div className="hero h-44">
 				<div className="hero-content text-center text-white">
 					<div className="max-w-md">
 						<h1 className="text-5xl font-bold">Register</h1>
@@ -55,7 +56,9 @@ const Register = () => {
 
 					<div className="form-control w-full mb-5 mx-auto max-w-xs md:max-w-md">
 						<label className="label">
-							<span className="label-text text-white">Password</span>
+							<span className="label-text text-white">
+								Password
+							</span>
 						</label>
 						<input
 							type="password"
@@ -69,7 +72,9 @@ const Register = () => {
 
 					<div className="form-control w-full mb-5 mx-auto max-w-xs md:max-w-md">
 						<label className="label">
-							<span className="label-text text-white">Confirm Password</span>
+							<span className="label-text text-white">
+								Confirm Password
+							</span>
 						</label>
 						<input
 							type="password"
