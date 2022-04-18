@@ -1,9 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { toast } from "react-toastify";
 import { EyeOffIcon, EyeIcon } from "@heroicons/react/outline";
 
 const Register = () => {
+	const router = useRouter();
+
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -35,6 +40,8 @@ const Register = () => {
 
 			toast.success(`${message}. Please login.`);
 			setIsLoading(false);
+
+			router.push("/login");
 		} catch (error) {
 			toast.error(error.response.data.message);
 			setIsLoading(false);
@@ -42,14 +49,14 @@ const Register = () => {
 	};
 
 	return (
-		<div className="h-screen overflow-auto bg-gradient-to-r from-secondary to-primary">
+		<div className="min-h-screen overflow-auto bg-gradient-to-r from-secondary to-primary">
 			{/* Progress bar */}
 			{isLoading && (
 				<progress className="progress progress-accent w-full" />
 			)}
 
 			{/* Jumbotron */}
-			<div className="hero h-44">
+			<div className="hero h-40">
 				<div className="hero-content text-center text-white">
 					<div className="max-w-md">
 						<h1 className="text-5xl font-bold">Register</h1>
@@ -132,7 +139,7 @@ const Register = () => {
 						</label>
 					</div>
 
-					<div className="form-control w-full mb-5 mx-auto max-w-xs md:max-w-md">
+					<div className="form-control w-full mx-auto max-w-xs md:max-w-md">
 						<label className="label">
 							<span className="label-text text-white">
 								Confirm Password
@@ -182,9 +189,9 @@ const Register = () => {
 					</div>
 
 					<br />
-					<div className="text-center mb-5">
+					<div className="text-center mb-4">
 						<button
-							className="btn btn-accent btn-md lg:btn-lg"
+							className="btn btn-accent btn-wide btn-md lg:btn-lg"
 							disabled={
 								!name ||
 								!email ||
@@ -199,6 +206,13 @@ const Register = () => {
 						</button>
 					</div>
 				</form>
+
+				<p className="text-center pb-20">
+					Already registered?{" "}
+					<Link href="/login">
+						<a className="text-info">Login</a>
+					</Link>
+				</p>
 			</div>
 		</div>
 	);
