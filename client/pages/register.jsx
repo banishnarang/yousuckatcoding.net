@@ -6,10 +6,24 @@ const Register = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [passwordConfirm, setPasswordConfirm] = useState("");
-	const [error, setError] = useState("");
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		try {
+			const {
+				data: { message },
+			} = await axios.post("http://localhost:8080/api/register", {
+				name,
+				email,
+				password,
+				passwordConfirm,
+			});
+
+			alert(`${message}, please login`);
+		} catch (error) {
+			alert(error.response.data.message);
+		}
 	};
 
 	return (

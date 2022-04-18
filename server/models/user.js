@@ -24,7 +24,7 @@ const userSchema = new Schema(
 		avatar: String,
 		role: {
 			type: String,
-			default: ["Student"],
+			default: "Student",
 			enum: ["Student", "Instructor", "Admin"],
 		},
 		stripeAccountId: "",
