@@ -3,17 +3,17 @@ import { LoginIcon, UserAddIcon } from "@heroicons/react/outline";
 
 const Header = () => {
 	return (
-		<div className="navbar bg-base-100">
+		<div className="navbar bg-gradient-to-r from-secondary hover:from-primary to-primary hover:to-secondary">
 			<div className="flex-1">
 				<Link href="/">
-					<a className="btn btn-ghost normal-case text-xl">
-						You <span className="text-secondary">Suck</span> At{" "}
+					<pre className="btn btn-ghost normal-case text-xl">
+						You<span className="text-accent">Suck</span>At
 						<span className="text-accent">Coding</span>
-					</a>
+					</pre>
 				</Link>
 			</div>
 			<div className="flex-none">
-				<ul class="menu menu-horizontal p-0">
+				<ul className="menu menu-horizontal p-0">
 					<li>
 						<Link href="/register">
 							<a>
@@ -32,18 +32,12 @@ const Header = () => {
 					</li>
 				</ul>
 				<div className="dropdown dropdown-end">
-					<label
-						tabindex="0"
-						className="btn btn-ghost btn-circle avatar"
-					>
+					<label className="btn btn-ghost btn-circle avatar">
 						<div className="w-10 rounded-full">
 							<img src="https://api.lorem.space/image/face?hash=33791" />
 						</div>
 					</label>
-					<ul
-						tabindex="0"
-						className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-					>
+					<ul className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
 						<li>
 							<a>Profile</a>
 						</li>
