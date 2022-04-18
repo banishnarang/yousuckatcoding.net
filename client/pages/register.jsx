@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Register = () => {
 	const [name, setName] = useState("");
@@ -20,9 +21,9 @@ const Register = () => {
 				passwordConfirm,
 			});
 
-			alert(`${message}, please login`);
+			toast.success(`${message}, please login`);
 		} catch (error) {
-			alert(error.response.data.message);
+			toast.error(error.response.data.message);
 		}
 	};
 
