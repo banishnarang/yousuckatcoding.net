@@ -1,5 +1,6 @@
 import User from "../models/user";
 import { hashPassword, comparePassword } from "../utils/auth";
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
 	try {
@@ -50,9 +51,66 @@ export const register = async (req, res) => {
 		return res.status(201).json({
 			message: "Registration successful",
 		});
-	} catch (err) {
+	} catch (error) {
 		return res.status(400).json({
-			message: err.message,
+			message: error.message,
+		});
+	}
+};
+
+export const login = async (req, res) => {
+	try {
+		const { email, password } = req.body;
+
+		// Find user with email
+		const user = await User.findOne({ email });
+
+		// User not found
+		if (!user) {
+			return res.status(400).json({
+				message: "Invalid email or password",
+			});
+		}
+
+		// Check password
+		const isValidPassword = await comparePassword(password, user.password);
+
+		// Password is not valid
+		if (!isValidPassword) {
+			return res.status(400).json({
+				message: "Invalid email or password",
+			});
+		}
+
+		// Create token
+		const token = jwt.sign(
+			{
+				id: user._id,
+			},
+			process.env.JWT_SECRET,
+			{
+				expiresIn: "24h",
+			}
+		);
+
+		// Create cookie
+		res.cookie("token", token, {
+			httpOnly: true,
+			secure: false, // only for https
+			maxAge: 1000 * 60 * 60 * 24,
+		});
+
+		// Send response
+		return res.status(200).json({
+			message: "Login successful",
+			user: {
+				name: user.name,
+				email: user.email,
+			},
+		});
+	} catch (error) {
+		return res.status(400).json({
+			message: error.message,
 		});
 	}
 };

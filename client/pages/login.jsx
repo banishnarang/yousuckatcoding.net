@@ -125,7 +125,6 @@ const Login = () => {
 								!email ||
 								(email && !checkIsValidEmail(email)) ||
 								!password ||
-								(password && password.length < 6) ||
 								isLoading
 							}
 						>
