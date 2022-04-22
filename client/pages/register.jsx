@@ -197,6 +197,7 @@ const Register = () => {
 								!email ||
 								(email && !checkIsValidEmail(email)) ||
 								!password ||
+								(password && password.length < 6) ||
 								!passwordConfirm ||
 								password !== passwordConfirm ||
 								isLoading
