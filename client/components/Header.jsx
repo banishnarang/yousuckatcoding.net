@@ -1,7 +1,39 @@
+import { useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { Context } from "../context";
+import { toast } from "react-toastify";
+import axios from "axios";
+
 import { LoginIcon, UserAddIcon } from "@heroicons/react/outline";
 
 const Header = () => {
+	const router = useRouter();
+	const { state, dispatch } = useContext(Context);
+
+	const handleLogout = async (e) => {
+		e.preventDefault();
+
+		try {
+			const {
+				data: { message },
+			} = await axios.get(`/api/logout`);
+
+			toast.success(message);
+
+			// remove user from global state
+			dispatch({ type: "CLEAR_USER" });
+
+			// remove user from local storage
+			localStorage.removeItem("user");
+
+			// redirect to login page
+			router.push("/login");
+		} catch (error) {
+			toast.error(error?.response?.data?.message);
+		}
+	};
+
 	return (
 		<div className="navbar bg-gradient-to-r from-secondary hover:from-primary to-primary hover:to-secondary">
 			<div className="flex-1">
@@ -32,19 +64,25 @@ const Header = () => {
 					</li>
 				</ul>
 				<div className="dropdown dropdown-end">
-					<label className="btn btn-ghost btn-circle avatar">
+					<label
+						tabindex="0"
+						className="btn btn-ghost btn-circle avatar"
+					>
 						<div className="w-10 rounded-full">
 							<img src="https://api.lorem.space/image/face?hash=33791" />
 						</div>
 					</label>
-					<ul className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+					<ul
+						tabindex="0"
+						className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+					>
 						<li>
 							<a>Profile</a>
 						</li>
 						<li>
 							<a>Settings</a>
 						</li>
-						<li>
+						<li onClick={handleLogout}>
 							<a>Logout</a>
 						</li>
 					</ul>
