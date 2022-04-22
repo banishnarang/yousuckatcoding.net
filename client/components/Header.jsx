@@ -9,7 +9,10 @@ import { LoginIcon, UserAddIcon } from "@heroicons/react/outline";
 
 const Header = () => {
 	const router = useRouter();
-	const { state, dispatch } = useContext(Context);
+	const {
+		state: { user },
+		dispatch,
+	} = useContext(Context);
 
 	const handleLogout = async (e) => {
 		e.preventDefault();
@@ -45,48 +48,53 @@ const Header = () => {
 				</Link>
 			</div>
 			<div className="flex-none">
-				<ul className="menu menu-horizontal p-0">
-					<li>
-						<Link href="/register">
-							<a>
-								<UserAddIcon className="w-6 h-6" />
-								Register
-							</a>
-						</Link>
-					</li>
-					<li>
-						<Link href="/login">
-							<a>
-								<LoginIcon className="w-6 h-6" />
-								Login
-							</a>
-						</Link>
-					</li>
-				</ul>
-				<div className="dropdown dropdown-end">
-					<label
-						tabindex="0"
-						className="btn btn-ghost btn-circle avatar"
-					>
-						<div className="w-10 rounded-full">
-							<img src="https://api.lorem.space/image/face?hash=33791" />
-						</div>
-					</label>
-					<ul
-						tabindex="0"
-						className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-					>
+				{!user ? (
+					<ul className="menu menu-horizontal p-0">
 						<li>
-							<a>Profile</a>
+							<Link href="/register">
+								<a>
+									<UserAddIcon className="w-6 h-6" />
+									Register
+								</a>
+							</Link>
 						</li>
 						<li>
-							<a>Settings</a>
-						</li>
-						<li onClick={handleLogout}>
-							<a>Logout</a>
+							<Link href="/login">
+								<a>
+									<LoginIcon className="w-6 h-6" />
+									Login
+								</a>
+							</Link>
 						</li>
 					</ul>
-				</div>
+				) : (
+					<div className="dropdown dropdown-end mr-2">
+						<label
+							tabindex="0"
+							className="btn btn-ghost btn-circle avatar mt-1 bg-neutral-content"
+						>
+							<div className="w-14 rounded-full">
+								<img
+									src={`https://avatars.dicebear.com/api/open-peeps/:${user.id}.svg`}
+								/>
+							</div>
+						</label>
+						<ul
+							tabindex="0"
+							className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+						>
+							<li>
+								<a>Profile</a>
+							</li>
+							<li>
+								<a>Settings</a>
+							</li>
+							<li onClick={handleLogout}>
+								<a>Logout</a>
+							</li>
+						</ul>
+					</div>
+				)}
 			</div>
 		</div>
 	);
