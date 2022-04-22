@@ -95,11 +95,7 @@ const Login = () => {
 							required
 						/>
 						<label className="label">
-							<span className="label-text-alt text-error">
-								{password &&
-									password.length < 6 &&
-									"Password must be at least 6 characters"}
-							</span>
+							<span />
 							<label className="swap">
 								<input
 									type="checkbox"
