@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Context } from "../context";
 
 import { toast } from "react-toastify";
 import { EyeOffIcon, EyeIcon } from "@heroicons/react/outline";
@@ -9,6 +10,7 @@ import { EyeOffIcon, EyeIcon } from "@heroicons/react/outline";
 const Register = () => {
 	const router = useRouter();
 
+	// local states
 	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -16,6 +18,18 @@ const Register = () => {
 	const [passwordConfirm, setPasswordConfirm] = useState("");
 	const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+	// global state
+	const {
+		state: { user },
+	} = useContext(Context);
+
+	// check if user is logged in
+	useEffect(() => {
+		if (user) {
+			router.push("/");
+		}
+	}, [user]);
 
 	const checkIsValidEmail = (email) => {
 		const re =

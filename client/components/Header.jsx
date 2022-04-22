@@ -75,7 +75,11 @@ const Header = () => {
 						>
 							<div className="w-14 rounded-full">
 								<img
-									src={`https://avatars.dicebear.com/api/open-peeps/:${user.id}.svg`}
+									src={
+										user.avatar
+											? user.avatar
+											: `https://avatars.dicebear.com/api/open-peeps/:${user.id}.svg`
+									}
 								/>
 							</div>
 						</label>
