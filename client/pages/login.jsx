@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
 import { toast } from "react-toastify";
+import { Context } from "../context";
+
 import { EyeOffIcon, EyeIcon } from "@heroicons/react/outline";
 
 // utils
@@ -12,10 +13,14 @@ import { checkIsValidEmail } from "../utils/auth";
 const Login = () => {
 	const router = useRouter();
 
+	// local states
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+
+	// global state
+	const { state, dispatch } = useContext(Context);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -24,15 +29,23 @@ const Login = () => {
 			setIsLoading(true);
 
 			const {
-				data: { message },
+				data: { message, user },
 			} = await axios.post(`/api/login`, {
 				email,
 				password,
 			});
 
-			toast.success(message);
+			toast.success(`${message}. Welcome back, ${user.name}!`);
+
+			// set user in global state
+			dispatch({ type: "SET_USER", payload: user });
+
+			// save user in local storage
+			localStorage.setItem("user", JSON.stringify(user));
+
 			setIsLoading(false);
 
+			// redirect to home page
 			router.push("/");
 		} catch (error) {
 			toast.error(error.response.data.message);

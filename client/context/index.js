@@ -1,4 +1,4 @@
-import { useReducer, createContext } from "react";
+import { useReducer, createContext, useEffect } from "react";
 
 // initial state
 const initialState = {
@@ -29,6 +29,14 @@ const rootReducer = (state, action) => {
 // context provider
 const Provider = ({ children }) => {
 	const [state, dispatch] = useReducer(rootReducer, initialState);
+
+    // dispatch user to state on component mount from localStorage
+	useEffect(() => {
+		const user = localStorage.getItem("user");
+		if (user) {
+			dispatch({ type: "SET_USER", payload: JSON.parse(user) });
+		}
+	}, []);
 
 	return (
 		<Context.Provider value={{ state, dispatch }}>
