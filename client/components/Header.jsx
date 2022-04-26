@@ -70,7 +70,7 @@ const Header = () => {
 				) : (
 					<div className="dropdown dropdown-end mr-2">
 						<label
-							tabindex="0"
+							tabIndex="0"
 							className="btn btn-ghost btn-circle avatar mt-1 bg-neutral-content"
 						>
 							<div className="w-14 rounded-full">
@@ -84,14 +84,13 @@ const Header = () => {
 							</div>
 						</label>
 						<ul
-							tabindex="0"
+							tabIndex="0"
 							className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 						>
 							<li>
-								<a>Profile</a>
-							</li>
-							<li>
-								<a>Settings</a>
+								<Link href="/user">
+									<a>Dashboard</a>
+								</Link>
 							</li>
 							<li onClick={handleLogout}>
 								<a>Logout</a>

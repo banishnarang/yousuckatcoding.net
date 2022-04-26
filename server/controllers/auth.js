@@ -96,7 +96,7 @@ export const login = async (req, res) => {
 		// Create cookie
 		res.cookie("token", token, {
 			httpOnly: true,
-			secure: false, // only for https
+			secure: false, // only true for https
 			maxAge: 1000 * 60 * 60 * 24,
 		});
 
@@ -121,6 +121,22 @@ export const logout = (req, res) => {
 
 		return res.status(200).json({
 			message: "Logout successful",
+		});
+	} catch (error) {
+		return res.status(400).json({
+			message: error.message,
+		});
+	}
+};
+
+export const currentUser = async (req, res) => {
+	try {
+		const { id } = req.auth;
+		const user = await User.findById(id).select("-password");
+
+		return res.status(200).json({
+			message: "Current user",
+			user,
 		});
 	} catch (error) {
 		return res.status(400).json({

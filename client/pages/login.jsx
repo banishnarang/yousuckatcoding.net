@@ -44,10 +44,9 @@ const Login = () => {
 				email,
 				password,
 			});
+			const firstName = user?.name?.split(" ")[0];
 
-			toast.success(
-				`${message}. Welcome back, ${user.name.split(" ")[0]}!`
-			);
+			toast.success(`${message}. Welcome back, ${firstName}!`);
 
 			// set user in global state
 			dispatch({ type: "SET_USER", payload: user });
