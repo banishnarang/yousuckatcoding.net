@@ -45,7 +45,9 @@ const Login = () => {
 				password,
 			});
 
-			toast.success(`${message}. Welcome back, ${user.name}!`);
+			toast.success(
+				`${message}. Welcome back, ${user.name.split(" ")[0]}!`
+			);
 
 			// set user in global state
 			dispatch({ type: "SET_USER", payload: user });

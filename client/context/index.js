@@ -1,4 +1,6 @@
 import { useReducer, createContext, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 // initial state
 const initialState = {
@@ -30,13 +32,55 @@ const rootReducer = (state, action) => {
 const Provider = ({ children }) => {
 	const [state, dispatch] = useReducer(rootReducer, initialState);
 
-    // dispatch user to state on component mount from localStorage
+	// router
+	const router = useRouter();
+
+	// dispatch user to state on component mount from localStorage
 	useEffect(() => {
 		const user = localStorage.getItem("user");
 		if (user) {
 			dispatch({ type: "SET_USER", payload: JSON.parse(user) });
 		}
 	}, []);
+
+	axios.interceptors.response.use(
+		(response) => {
+			// when request is successful (status code 2XX), return response
+			return response;
+		},
+		(error) => {
+			// when request is unsuccessful (status code 4XX)
+			const response = error.response;
+			if (
+				response.status === 401 &&
+				response.config &&
+				!response.config.__isRetryRequest
+			) {
+				return new Promise((resolve, reject) => {
+					// log user out
+					axios
+						.get("/api/logout")
+						.then((data) => {
+							console.log("/401 error -> logout");
+
+							// clear user
+							dispatch({ type: "CLEAR_USER" });
+							localStorage.removeItem("user");
+
+							// redirect to login page
+							router.push("/login");
+						})
+						.catch((error) => {
+							console.log("Axios interceptor error: ", error);
+							reject(error);
+						});
+				});
+			}
+
+			// return error
+			return Promise.reject(error);
+		}
+	);
 
 	return (
 		<Context.Provider value={{ state, dispatch }}>
