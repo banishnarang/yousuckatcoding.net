@@ -124,7 +124,7 @@ const Register = () => {
 						</label>
 						<input
 							type={showPassword ? "text" : "password"}
-							placeholder="**********"
+							placeholder={showPassword ? "qwerty" : "••••••"}
 							className="input input-bordered text-white w-full max-w-xs md:max-w-md"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
@@ -161,7 +161,9 @@ const Register = () => {
 						</label>
 						<input
 							type={showPasswordConfirm ? "text" : "password"}
-							placeholder="**********"
+							placeholder={
+								showPasswordConfirm ? "qwerty" : "••••••"
+							}
 							className="input input-bordered text-white w-full max-w-xs md:max-w-md"
 							value={passwordConfirm}
 							onChange={(e) => setPasswordConfirm(e.target.value)}

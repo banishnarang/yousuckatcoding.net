@@ -65,7 +65,7 @@ const Login = () => {
 	};
 
 	return (
-		<div className="min-h-screen overflow-auto bg-gradient-to-r from-secondary to-primary">
+		<div className="h-screen overflow-auto bg-gradient-to-r from-secondary to-primary">
 			{/* Progress bar */}
 			{isLoading && (
 				<progress className="progress progress-accent w-full" />
@@ -112,7 +112,7 @@ const Login = () => {
 						</label>
 						<input
 							type={showPassword ? "text" : "password"}
-							placeholder="**********"
+							placeholder={showPassword ? "qwerty" : "••••••"}
 							className="input input-bordered text-white w-full max-w-xs md:max-w-md"
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
@@ -153,7 +153,13 @@ const Login = () => {
 					</div>
 				</form>
 
-				<p className="text-center pb-20">
+				<p className="text-center pb-2">
+					<Link href="/forgot-password">
+						<a className="text-info">Forgot password?</a>
+					</Link>
+				</p>
+
+				<p className="text-center pb-8 sm:pb-4">
 					Not yet registered?{" "}
 					<Link href="/register">
 						<a className="text-info">Register</a>
