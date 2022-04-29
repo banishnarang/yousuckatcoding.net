@@ -1,6 +1,16 @@
 import User from "../models/user";
 import { hashPassword, comparePassword } from "../utils/auth";
 import jwt from "jsonwebtoken";
+import AWS from "aws-sdk";
+
+const awsConfig = {
+	accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+	secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+	region: process.env.AWS_REGION,
+	apiVersion: process.env.AWS_API_VERSION,
+};
+
+const SES = new AWS.SES(awsConfig);
 
 export const register = async (req, res) => {
 	try {
@@ -137,6 +147,43 @@ export const currentUser = async (req, res) => {
 		return res.status(200).json({
 			message: "Current user",
 			user,
+		});
+	} catch (error) {
+		return res.status(400).json({
+			message: error.message,
+		});
+	}
+};
+
+export const sendTestEmail = async (req, res) => {
+	const params = {
+		Source: process.env.EMAIL_FROM,
+		Destination: {
+			ToAddresses: [process.env.TEST_EMAIL_TO],
+		},
+		ReplyToAddresses: [process.env.EMAIL_FROM],
+		Message: {
+			Subject: {
+				Data: "Test email from server",
+			},
+			Body: {
+				Text: {
+					Data: "This is a test email from the server",
+				},
+				Html: {
+					Charset: "UTF-8",
+					Data: `<h1>Test Email</h1>
+					<p>This is a test email from the server</p>`,
+				},
+			},
+		},
+	};
+
+	try {
+		const data = await SES.sendEmail(params).promise();
+		return res.status(200).json({
+			message: "Email sent",
+			data,
 		});
 	} catch (error) {
 		return res.status(400).json({
